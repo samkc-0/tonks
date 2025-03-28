@@ -1,0 +1,54 @@
+# root ignores
+.env
+.env.*
+__pycache__/
+*.py[cod]
+*.log
+*.sqlite3
+*.db
+
+# node
+node_modules/
+*.tsbuildinfo
+dist/
+build/
+.vite/
+.next/
+*.log
+
+# python
+*.egg-info/
+.venv/
+venv/
+pip-wheel-metadata/
+
+# docker
+*.tar
+*.pid
+
+# frontend
+apps/frontend/.env
+apps/frontend/node_modules
+apps/frontend/dist
+apps/frontend/build
+
+# backend
+apps/backend/.env
+apps/backend/__pycache__/
+apps/backend/.mypy_cache/
+apps/backend/.pytest_cache/
+apps/backend/instance/
+apps/backend/*.sqlite3
+
+# turbo
+.turbo/
+
+# misc
+.DS_Store
+*.swp
+*.swo
+.idea/
+.vscode/
+coverage/
+*.coverage
+*.orig
