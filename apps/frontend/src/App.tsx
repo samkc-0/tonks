@@ -140,7 +140,7 @@ export default function App() {
             <div
               key={index}
               onClick={() => setSelectedPerson(person)}
-              className="relative cursor-pointer bg-gray-800 rounded-xl p-6 shadow-lg transition-all duration-300 hover:shadow-2xl hover:-translate-y-1"
+              className="relative cursor-pointer bg-gray-800/50 backdrop-blur-sm rounded-xl p-6 shadow-lg transition-all duration-300 hover:shadow-2xl hover:-translate-y-1"
             >
               {/* Delete Button */}
               <button
