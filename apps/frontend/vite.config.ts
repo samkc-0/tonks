@@ -11,6 +11,7 @@ const config: UserConfig = {
       "/create": "http://localhost:8000",
       "/upgrade-email": "http://localhost:8000",
       "/messages": "http://localhost:8000",
+      "/message": "http://localhost:8000",
       "/inbox": "http://localhost:8000",
     },
   },

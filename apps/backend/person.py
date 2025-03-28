@@ -6,6 +6,11 @@ from typing import Literal
 from constants import first_names, last_names, fun_words
 
 
+def generate_password(length=12):
+    characters = string.ascii_letters + string.digits + "_-."
+    return "".join(secrets.choice(characters) for _ in range(length))
+
+
 def generate_name():
     first = random.choice(first_names)
     last = random.choice(last_names)

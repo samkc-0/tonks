@@ -417,6 +417,20 @@ interface MailtmMessage {
 export function MailInbox({ token }: { token: string }) {
   const [messages, setMessages] = useState<MailtmMessage[]>([]);
   const [loading, setLoading] = useState(false);
+  const [selectedId, setSelectedId] = useState<string | null>(null);
+  const [selectedMessage, setSelectedMessage] = useState<any>(null);
+
+  const fetchMessage = async (id: string) => {
+    try {
+      const res = await axios.get("/message", {
+        params: { id, token },
+      });
+      setSelectedMessage(res.data);
+    } catch (err) {
+      console.error("Failed to fetch full message", err);
+      setSelectedMessage(null);
+    }
+  };
 
   const fetchInbox = async () => {
     try {
@@ -458,27 +472,49 @@ export function MailInbox({ token }: { token: string }) {
       ) : messages.length === 0 ? (
         <p className="text-sm text-gray-500">No messages yet.</p>
       ) : (
-        <ul className="space-y-2">
-          {messages.map((msg) => (
-            <li
-              key={msg.id}
-              className="bg-gray-800 p-3 rounded-md shadow hover:bg-gray-700 transition"
-            >
-              <div className="text-sm text-gray-300 font-medium">
-                {msg.subject || "(no subject)"}
+        <>
+          <ul className="space-y-2">
+            {messages.map((msg) => (
+              <li
+                key={msg.id}
+                onClick={() => {
+                  setSelectedId(msg.id);
+                  fetchMessage(msg.id);
+                }}
+                className={`cursor-pointer bg-gray-800 p-3 rounded-md shadow hover:bg-gray-700 transition ${
+                  msg.id === selectedId ? "ring-2 ring-blue-500" : ""
+                }`}
+              >
+                <div className="text-sm text-gray-300 font-medium">
+                  {msg.subject || "(no subject)"}
+                </div>
+                <div className="text-xs text-gray-400">
+                  From: {msg.from?.address}
+                </div>
+                <div className="text-xs text-gray-500">
+                  {new Date(msg.createdAt).toLocaleString()}
+                </div>
+                <div className="text-xs text-gray-400 mt-1 italic">
+                  {msg.intro}
+                </div>
+              </li>
+            ))}
+          </ul>
+          {selectedMessage && (
+            <div className="mt-4 border-t border-gray-700 pt-3 text-sm text-gray-300">
+              <h4 className="text-base font-semibold text-white mb-1">
+                {selectedMessage.subject}
+              </h4>
+              <p className="text-xs text-gray-400 mb-2">
+                From: {selectedMessage.from?.address} <br />
+                Date: {new Date(selectedMessage.createdAt).toLocaleString()}
+              </p>
+              <div className="whitespace-pre-wrap">
+                {selectedMessage.text || selectedMessage.html || "(No content)"}
               </div>
-              <div className="text-xs text-gray-400">
-                From: {msg.from?.address}
-              </div>
-              <div className="text-xs text-gray-500">
-                {new Date(msg.createdAt).toLocaleString()}
-              </div>
-              <div className="text-xs text-gray-400 mt-1 italic">
-                {msg.intro}
-              </div>
-            </li>
-          ))}
-        </ul>
+            </div>
+          )}
+        </>
       )}
     </div>
   );

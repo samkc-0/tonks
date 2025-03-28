@@ -14,7 +14,7 @@ from slowapi.util import get_remote_address
 from slowapi.errors import RateLimitExceeded
 from dotenv import load_dotenv
 from constants import first_names, last_names, fun_words
-from person import generate_person
+from person import generate_person, generate_password
 
 app = FastAPI()
 limiter = Limiter(key_func=get_remote_address)
@@ -42,11 +42,6 @@ GROQ_API_KEY = os.getenv("GROQ_API_KEY")
 # ====================
 # Utility Functions
 # ====================
-
-
-def generate_password(length=12):
-    characters = string.ascii_letters + string.digits + "_-."
-    return "".join(secrets.choice(characters) for _ in range(length))
 
 
 def get_messages(token):
