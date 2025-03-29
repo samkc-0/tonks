@@ -14,7 +14,7 @@ from slowapi.util import get_remote_address
 from slowapi.errors import RateLimitExceeded
 from dotenv import load_dotenv
 from constants import first_names, last_names, fun_words
-from person import generate_person, generate_password
+from basic_person import generate_person, generate_password
 
 app = FastAPI()
 limiter = Limiter(key_func=get_remote_address)
